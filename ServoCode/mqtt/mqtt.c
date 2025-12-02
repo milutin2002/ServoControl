@@ -1,13 +1,20 @@
 #include "mqtt.h"
 
 
-
+QueueHandle_t queue = NULL;
 
 static void onTopic(void *arg,const char *topic,u32_t len){
     printf("MQTT incoming topic %s\n and len is %d",topic,len);
+    if(strcmp(topic,TOPIC_LEFT)==0){
+        enum Action cmd=LEFT;
+        xQueueSendToBack(queue,&cmd,2000);
+    }
+    else if(strcmp(topic,TOPIC_RIGHT)==0){
+        enum Action cmd=RIGHT;
+        xQueueSendToBack(queue,&cmd,2000);
+    }
 }
 static void onData(void *arg,const u8_t *data,u16_t len,u8_t flags){
-    char buf[8];
 }
 
 static void onConnect(mqtt_client_t *client,void *arg,mqtt_connection_status_t st){

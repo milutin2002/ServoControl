@@ -38,7 +38,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(ServoCode ServoCode.c servo.c wifi/wifi.c mqtt/mqtt.c)
+add_executable(ServoCode ServoCode.c servo.c mqtt/mqtt.c wifi/wifi.c)
 
 pico_set_program_name(ServoCode "ServoCode")
 pico_set_program_version(ServoCode "0.1")
