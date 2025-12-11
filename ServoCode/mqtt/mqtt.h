@@ -19,6 +19,8 @@ static mqtt_client_t *mq=NULL;
 
 extern QueueHandle_t queue;
 
+extern EventGroupHandle_t netEvents;
+
 enum Action{
     LEFT,RIGHT
 };

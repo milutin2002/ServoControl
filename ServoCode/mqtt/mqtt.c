@@ -3,6 +3,9 @@
 
 QueueHandle_t queue = NULL;
 
+extern EventGroupHandle_t netEventsE;
+
+
 static void onTopic(void *arg,const char *topic,u32_t len){
     printf("MQTT incoming topic %s\n and len is %d",topic,len);
     if(strcmp(topic,TOPIC_LEFT)==0){
@@ -31,7 +34,7 @@ static void onConnect(mqtt_client_t *client,void *arg,mqtt_connection_status_t s
 
 void mqttTask( void * _){
    // printf("%p\n",(void *)netEvents);
-    //xEventGroupWaitBits(netEvents,NET_READY_BIT,pdFALSE,pdTRUE,portMAX_DELAY);
+    xEventGroupWaitBits(netEvents,NET_READY_BIT,pdFALSE,pdTRUE,portMAX_DELAY);
     printf("Entering mqtt task\n");
     ip_addr_t broker_ip;
     err_t de=netconn_gethostbyname(MQTT_HOST,&broker_ip);

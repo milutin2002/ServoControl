@@ -29,6 +29,7 @@ void servoTask(void *){
         sleep_ms(100);
     }
 }
+EventGroupHandle_t netEvents;
 int main()
 {
     stdio_init_all();
@@ -36,7 +37,7 @@ int main()
     netEvents=xEventGroupCreate();
     queue=xQueueCreate(COUNT_QUEUE_LEN,sizeof(enum Action));
     xTaskCreate(wifiTask,"Wifi task",256,NULL,tskIDLE_PRIORITY+1,NULL);
-    //xTaskCreate(mqttTask,"Mqtt task",256,NULL,tskIDLE_PRIORITY+1,NULL);
+    xTaskCreate(mqttTask,"Mqtt task",256,NULL,tskIDLE_PRIORITY+1,NULL);
     xTaskCreate(servoTask,"Servo task",256,NULL,tskIDLE_PRIORITY+1,NULL);
     vTaskStartScheduler();
     while(true){}

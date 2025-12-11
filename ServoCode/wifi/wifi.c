@@ -1,5 +1,7 @@
 #include"wifi.h"
 
+extern EventGroupHandle_t netEventsE;
+
 void wifiTask(void * param){
     //printf("%p\n",(void *)netEvents);
     printf("Starting wifi connection process\n");
@@ -28,7 +30,7 @@ void wifiTask(void * param){
     }
      uint8_t *ip_address = (uint8_t*)&(cyw43_state.netif[0].ip_addr.addr);
     printf("IP address %d.%d.%d.%d\n", ip_address[0], ip_address[1], ip_address[2], ip_address[3]);
-    xTaskCreate(mqttTask,"Mqtt task",256,NULL,tskIDLE_PRIORITY+1,NULL);
-    //xEventGroupSetBits(netEvents,NET_READY_BIT);
+    //xTaskCreate(mqttTask,"Mqtt task",256,NULL,tskIDLE_PRIORITY+1,NULL);
+    xEventGroupSetBits(netEvents,NET_READY_BIT);
     vTaskDelete(NULL);
 }
