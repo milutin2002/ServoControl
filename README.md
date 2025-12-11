@@ -68,7 +68,7 @@ remote control ├── app/ ├── build.gradle └── ...
 
     cd ServoCode
     mkdir build && cd build
-    cmake ..
+    cmake .. -DWIFI_SSID=<wifi_name> -DWIFI_PASS=<wifi_password>
     make
 
 Flash the generated `.uf2` to your Pico.
