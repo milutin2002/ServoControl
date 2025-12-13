@@ -83,6 +83,11 @@ Flash the generated `.uf2` to your Pico.
 
 Open `Android/ControlServo` in Android Studio.
 
+### Pictures
+
+![Picture](Pictures/Servo.jpg)
+![Video](Pictures/appLook.gif)
+
 ------------------------------------------------------------------------
 
 ## License
