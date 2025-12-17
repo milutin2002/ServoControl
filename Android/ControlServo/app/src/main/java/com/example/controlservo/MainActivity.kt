@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -46,11 +49,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             ControlServoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column{
+                    Column (modifier = Modifier
+                        .fillMaxSize(), // Makes the Column take up the whole screen
+                        verticalArrangement = Arrangement.Center, // Centers children vertically in the main axis
+                        horizontalAlignment = Alignment.CenterHorizontally){
+                            IconButton(
+                                onClick = {
+                                    Log.i("Clicke","You clicked on button")
+                                    MqttController.publishData("pico/servo/up", onError = {
+                                        Log.e("Error_moving",it.message.toString())
+                                    })
+                                }
+                            ) {
+                                Icon(Icons.Default.KeyboardArrowUp, contentDescription = null)
+                            }
+
                         Row(
-                            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
+
                         ) {
                             IconButton(onClick = {
                                 MqttController.publishData("pico/servo/left", onError = {
@@ -67,25 +82,18 @@ class MainActivity : ComponentActivity() {
                                 Icon(Icons.Default.ArrowForward, contentDescription = null)
                             }
                         }
+                            IconButton(
+                                onClick = {
+                                    MqttController.publishData("pico/servo/down", onError = {
+                                        Log.e("Error_moving",it.message.toString())
+                                    })
+                                }
+                            ) {
+                                Icon(Icons.Default.KeyboardArrowDown, contentDescription = null)
+                            }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ControlServoTheme {
-        Greeting("Android")
     }
 }

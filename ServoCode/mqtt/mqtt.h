@@ -12,6 +12,8 @@
 #define MQTT_PORT 1883
 #define TOPIC_LEFT "pico/servo/left"
 #define TOPIC_RIGHT "pico/servo/right"
+#define TOPIC_UP "pico/servo/up"
+#define TOPIC_DOWN "pico/servo/down"
 
 #define COUNT_QUEUE_LEN 	10
 
@@ -22,7 +24,7 @@ extern QueueHandle_t queue;
 extern EventGroupHandle_t netEvents;
 
 enum Action{
-    LEFT,RIGHT
+    LEFT,RIGHT,UP,DOWN
 };
 
 static void onTopic(void *arg,const char *topic,u32_t len);

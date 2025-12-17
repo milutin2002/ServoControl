@@ -10,11 +10,21 @@ static void onTopic(void *arg,const char *topic,u32_t len){
     printf("MQTT incoming topic %s\n and len is %d",topic,len);
     if(strcmp(topic,TOPIC_LEFT)==0){
         enum Action cmd=LEFT;
-        xQueueSendToBack(queue,&cmd,2000);
+        xQueueSendToBack(queue,&cmd,0);
     }
     else if(strcmp(topic,TOPIC_RIGHT)==0){
         enum Action cmd=RIGHT;
-        xQueueSendToBack(queue,&cmd,2000);
+        xQueueSendToBack(queue,&cmd,0);
+    }
+    else if(strcmp(topic,TOPIC_UP)==0){
+        enum Action cmd=UP;
+        printf("Going up\n");
+        xQueueSendToBack(queue,&cmd,0);
+    }
+    else if(strcmp(topic,TOPIC_DOWN)==0){
+        enum Action cmd=DOWN;
+        printf("Going down");
+        xQueueSendToBack(queue,&cmd,0);
     }
 }
 static void onData(void *arg,const u8_t *data,u16_t len,u8_t flags){
@@ -26,6 +36,8 @@ static void onConnect(mqtt_client_t *client,void *arg,mqtt_connection_status_t s
         mqtt_set_inpub_callback(mq,onTopic,onData,NULL);
         mqtt_subscribe(mq,TOPIC_LEFT,0,NULL,NULL);
         mqtt_subscribe(mq,TOPIC_RIGHT,0,NULL,NULL);
+        mqtt_subscribe(mq,TOPIC_UP,0,NULL,NULL);
+        mqtt_subscribe(mq,TOPIC_DOWN,0,NULL,NULL);
     }
     else{
         printf("Mqtt connection failed\n");
