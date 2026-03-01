@@ -4,9 +4,9 @@
 #include "mqtt/mqtt.h"
 
 bool direction=true;
-int currentMills1=400,currentMills2=1600;
+int currentMills1=400,currentMills2=3000;
 #define SERVO_PIN1 12
-#define SERVO_PIN2 11
+#define SERVO_PIN2 10
 
 
 
@@ -29,16 +29,16 @@ void servoTask(void *){
             }
             else if(cmd==UP){
                 printf("Increasing height\n");
-                /*if(currentMills2<2400){
+                if(currentMills2<2400){
                     currentMills2+=50;
-                }*/
-                //setMills(SERVO_PIN2,currentMills2);
+                }
+                setMills(SERVO_PIN2,currentMills2);
             }
             else{
-                /*if(currentMills2>400){
+                if(currentMills2>400){
                     currentMills2-=50;
                 }
-                setMills(SERVO_PIN2,currentMills2);*/
+                setMills(SERVO_PIN2,currentMills2);
             }
             
         }
@@ -50,7 +50,7 @@ int main()
 {
     stdio_init_all();
     setServo(SERVO_PIN1,currentMills1);
-    //setServo(SERVO_PIN2,currentMills2);
+    setServo(SERVO_PIN2,currentMills2);
     netEvents=xEventGroupCreate();
     queue=xQueueCreate(COUNT_QUEUE_LEN,sizeof(enum Action));
     xTaskCreate(wifiTask,"Wifi task",256,NULL,tskIDLE_PRIORITY+1,NULL);
