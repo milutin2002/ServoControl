@@ -87,6 +87,7 @@ Open `Android/ControlServo` in Android Studio.
 
 ![Picture](Pictures/Servo.jpg)
 ![Video](Pictures/appLook.gif)
+![Picture](Pictures/rotateCamera.gif)
 
 ------------------------------------------------------------------------
 
